@@ -1,10 +1,11 @@
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
-from ctypes import windll, create_unicode_buffer, c_wchar_p, sizeof
 from string import ascii_uppercase
 from kivy.utils import platform
 from os import listdir
 
+if platform == 'win':
+    from ctypes import windll, create_unicode_buffer, c_wchar_p, sizeof
 
 class TestBox(BoxLayout):
     pass
@@ -34,7 +35,7 @@ class FCTest(App):
         if platform == 'win':
             names = self.get_win_drive_names()
         elif platform == 'macosx':
-            names = listdir('/Volume')
+            names = listdir('/Volumes')
         else:
             names = ['ERROR']  # raise exception?
         return names
