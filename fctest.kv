@@ -1,0 +1,88 @@
+#: import Factory kivy.factory.Factory
+#: import pathlib pathlib
+#: import utils kivy.utils
+
+TestBox:
+    orientation: 'vertical'
+    BoxLayout:
+        size_hint_y: None
+        height: 30
+        Button:
+            text: 'Test Load'
+            on_press:
+                drives = app.get_drive_names()
+                print(drives)
+            on_release: Factory.LoadDialog().open()
+        Button:
+            text: 'Test Save'
+            on_release: Factory.SaveDialog().open()
+
+<LoadDialog@Popup>:
+    title: 'Select a preset group file to load onto the preset buttons'
+    auto_dismiss: False
+    size_hint: .6,.75
+    BoxLayout:
+        orientation: 'vertical'
+        FileChooserListView:
+            id: fc
+            # filters: ['*.pgr']
+            # path: app.config.get(md.device_name, 'lib_dir' )
+            path: 'C:/Users/Elliot and Sharon/Documents'
+        BoxLayout:
+            size_hint_y: .1
+            Spinner:
+                text:'Drive'
+                values: app.get_drive_names()
+                on_text: fc.path = (self.text[-3:-1] +'/' ) if utils.platform =='win' else (self.text + '/')
+            Label:
+                # text: 'File Selected: ' + app.just_fname(fc.selection)
+                text_size: self.size
+                halign: 'center'
+                valign: 'center'
+                shorten: True
+                text: 'File: ' + ('<None>' if not fc.selection else pathlib.Path(fc.selection[0]).name)
+        BoxLayout:
+            size_hint_y: .1
+            orientation: 'horizontal'
+            Button:
+                text: 'Load'
+                disabled: 0==len(fc.selection)
+                on_release:
+                    # app.load_presets(fc.selection[0])
+                    print(f'File Selected: {fc.selection[0]}')
+                    root.dismiss()
+            Button:
+                text: 'Cancel'
+                on_release: root.dismiss()
+
+<SaveDialog@Popup>:
+    title: 'Save the 16 preset buttons to a preset group file'
+    size_hint: .6,.75
+    auto_dismiss: False
+    BoxLayout:
+        orientation: 'vertical'
+        FileChooserListView:
+            id: fc
+            # filters: ['*.pgr']
+            # path: app.config.get(md.device_name, 'lib_dir' )
+            path: 'C:/Users/Elliot and Sharon/Documents'
+            on_selection: text_input.text =  self.selection and pathlib.Path(self.selection[0]).name or ''
+        Label:
+            size_hint_y: .08
+            text: 'File: ' + ('<None>' if not fc.selection else pathlib.Path(fc.selection[0]).name)
+        TextInput:
+            size_hint_y: .1
+            id: text_input
+        BoxLayout:
+            size_hint_y: .1
+            orientation: 'horizontal'
+            Button:
+                text: 'Save'
+                #disabled: 0==len( fc.selection )
+                on_release:
+                    # app.save_presets( text_input.text, fc.path  )
+                    print(f'Write File: Path: {fc.path} file: {text_input.text}')
+                    root.dismiss()
+            Button:
+                text: 'Cancel'
+                on_release: root.dismiss()
