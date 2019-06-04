@@ -27,13 +27,13 @@ TestBox:
             id: fc
             # filters: ['*.pgr']
             # path: app.config.get(md.device_name, 'lib_dir' )
-            path: '/'  #'C:/Users/Elliot and Sharon/Documents'
+            path: '.'  #'C:/Users/Elliot and Sharon/Documents'
         BoxLayout:
             size_hint_y: .1
             Spinner:
                 text:'Drive'
                 values: app.get_drive_names()
-                on_text: fc.path = (self.text[-3:-1] +'/' ) if utils.platform =='win' else ('/Volumes/' + self.text)
+                on_text: fc.path = app.get_path(self.text)
             Label:
                 # text: 'File Selected: ' + app.just_fname(fc.selection)
                 text_size: self.size
