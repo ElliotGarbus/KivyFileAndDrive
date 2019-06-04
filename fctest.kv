@@ -13,13 +13,14 @@ TestBox:
             on_press:
                 drives = drivepath.get_drive_names()
                 print(drives)
-            on_release: Factory.LoadDialog().open()
+            on_release: Factory.LoadDialog(title='Select a preset group file to load onto the preset buttons').open()
         Button:
             text: 'Test Save'
             on_release: Factory.SaveDialog().open()
 
 <LoadDialog@Popup>:
-    title: 'Select a preset group file to load onto the preset buttons'
+    #title: 'Select a preset group file to load onto the preset buttons'
+    filters: fc.filters
     auto_dismiss: False
     size_hint: .6,.75
     BoxLayout:
@@ -28,7 +29,7 @@ TestBox:
             id: fc
             # filters: ['*.pgr']
             # path: app.config.get(md.device_name, 'lib_dir' )
-            path: '.'  #'C:/Users/Elliot and Sharon/Documents'
+            path: '.'
         BoxLayout:
             size_hint_y: .1
             Spinner:
