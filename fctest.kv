@@ -1,6 +1,7 @@
 #: import Factory kivy.factory.Factory
 #: import pathlib pathlib
 #: import utils kivy.utils
+#: import drivepath drivepath
 
 TestBox:
     orientation: 'vertical'
@@ -10,7 +11,7 @@ TestBox:
         Button:
             text: 'Test Load'
             on_press:
-                drives = app.get_drive_names()
+                drives = drivepath.get_drive_names()
                 print(drives)
             on_release: Factory.LoadDialog().open()
         Button:
@@ -32,8 +33,8 @@ TestBox:
             size_hint_y: .1
             Spinner:
                 text:'Drive'
-                values: app.get_drive_names()
-                on_text: fc.path = app.get_path(self.text)
+                values: drivepath.get_drive_names()
+                on_text: fc.path = drivepath.get_path(self.text)
             Label:
                 # text: 'File Selected: ' + app.just_fname(fc.selection)
                 text_size: self.size
