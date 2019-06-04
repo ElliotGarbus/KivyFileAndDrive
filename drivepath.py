@@ -1,10 +1,11 @@
+""" Return the drive names in the system """
+
 from string import ascii_uppercase
 from kivy.utils import platform
 from os import listdir
 
 if platform == 'win':
     from ctypes import windll, create_unicode_buffer, c_wchar_p, sizeof
-
 
 
 def get_win_drive_names():
