@@ -2,7 +2,7 @@ from kivy.app import App
 from kivy.lang.builder import Builder
 
 
-kv='''
+kv = '''
 #: import Factory kivy.factory.Factory
 BoxLayout:
     orientation: 'vertical'
@@ -32,6 +32,7 @@ BoxLayout:
             path: '.'
         
 '''
+
 
 class PUPTestApp(App):
     def build(self):
