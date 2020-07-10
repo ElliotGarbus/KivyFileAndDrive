@@ -17,6 +17,6 @@ class SaveDialog(Popup):
     path = StringProperty()
 
     def __init__(self, **kwargs):
-        filters = kwargs['filters']
-        path= kwargs['path']
+        self.filters = kwargs['filters']
+        self.path= kwargs['path']
         super().__init__(**kwargs)
